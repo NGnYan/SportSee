@@ -1,0 +1,35 @@
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background-color: #fbfbfb;
+  border-radius: 5px;
+  padding: 20px;
+  width: 250px;
+  height: 90px;
+}
+
+.stat-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-icon.calorie {
+  background-color: rgba(255, 0, 0, 0.15);
+}
+
+.stat-icon.protein {
+  background-color: rgba(74, 184, 255, 0.15);
+}
+
+.stat-icon.carbohydrate {
+  background-color: rgba(249, 206, 35, 0.15);
+}
+
+.stat-icon.lipid {
+  background-color: rgba(253, 81, 129, 0.15);
+}

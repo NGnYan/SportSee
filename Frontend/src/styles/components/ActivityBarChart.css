@@ -1,0 +1,66 @@
+.activity-chart-container {
+  border-radius: 5px;
+  padding: 30px;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.activity-chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.activity-chart-header h2 {
+  font-size: 15px;
+  font-weight: 500;
+  color: #20253a;
+  margin: 0;
+  line-height: 1.2;
+  display: flex;
+  align-items: center;
+}
+
+.custom-tooltip {
+  background-color: #e60000;
+  padding: 10px 15px;
+  border: none;
+  color: white;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.custom-tooltip p {
+  margin: 0;
+}
+
+.custom-legend {
+  display: flex;
+  justify-content: flex-end;
+  gap: 30px;
+  font-size: 14px;
+  color: #74798c;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-color {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.legend-color.weight {
+  background-color: #282d30;
+}
+
+.legend-color.calories {
+  background-color: #e60000;
+}
