@@ -24,7 +24,7 @@
   align-items: center;
 }
 
-.custom-tooltip {
+.activity-custom-tooltip {
   background-color: #e60000;
   padding: 10px 15px;
   border: none;
@@ -33,11 +33,11 @@
   line-height: 1.8;
 }
 
-.custom-tooltip p {
+.activity-custom-tooltip p {
   margin: 0;
 }
 
-.custom-legend {
+.activity-custom-legend {
   display: flex;
   justify-content: flex-end;
   gap: 30px;
@@ -45,22 +45,22 @@
   color: #74798c;
 }
 
-.legend-item {
+.activity-legend-item {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.legend-color {
+.activity-legend-color {
   width: 8px;
   height: 8px;
   border-radius: 50%;
 }
 
-.legend-color.weight {
+.activity-legend-color.weight {
   background-color: #282d30;
 }
 
-.legend-color.calories {
+.activity-legend-color.calories {
   background-color: #e60000;
 }

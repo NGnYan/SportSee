@@ -13,10 +13,13 @@ import "../styles/components/ActivityBarChart.css";
 
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
+    const weightData = payload.find((p) => p.dataKey === "kilogram");
+    const caloriesData = payload.find((p) => p.dataKey === "calories");
+
     return (
-      <div className="custom-tooltip">
-        <p>{payload[0] ? `${payload[0].value}kg` : ""}</p>
-        <p>{payload[1] ? `${payload[1].value}Kcal` : ""}</p>
+      <div className="activity-custom-tooltip">
+        <p>{weightData ? `${weightData.value}kg` : ""}</p>
+        <p>{caloriesData ? `${caloriesData.value}Kcal` : ""}</p>
       </div>
     );
   }
@@ -24,13 +27,13 @@ const CustomTooltip = ({ active, payload }) => {
 };
 
 const CustomLegend = () => (
-  <div className="custom-legend">
-    <div className="legend-item">
-      <div className="legend-color weight"></div>
+  <div className="activity-custom-legend">
+    <div className="activity-legend-item">
+      <div className="activity-legend-color weight"></div>
       <span>Poids (kg)</span>
     </div>
-    <div className="legend-item">
-      <div className="legend-color calories"></div>
+    <div className="activity-legend-item">
+      <div className="activity-legend-color calories"></div>
       <span>Calories brûlées (kCal)</span>
     </div>
   </div>
@@ -61,12 +64,14 @@ export default function ActivityBarChart({ userId = 12 }) {
   }, [userId]);
 
   if (loading) {
-    return <div className="chart-container">Chargement du graphique...</div>;
+    return (
+      <div className="activity-chart-container">Chargement du graphique...</div>
+    );
   }
 
   if (!activityData || activityData.length === 0) {
     return (
-      <div className="chart-container">
+      <div className="activity-chart-container">
         Aucune donnée disponible pour cet utilisateur.
       </div>
     );

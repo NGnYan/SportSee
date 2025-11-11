@@ -32,16 +32,17 @@ function AverageSessionsChart({ userId = 12 }) {
 
   return (
     <div className="average-sessions-chart">
-      <h2 className="chart-title">Durée moyenne des sessions</h2>
-      <ResponsiveContainer width="100%" height={250}>
+      <h2 className="average-chart-title">Durée moyenne des sessions</h2>
+
+      <ResponsiveContainer width="100%" height={80}>
         <LineChart
           data={sessions}
-          margin={{ top: 60, right: 15, left: 15, bottom: 10 }}
+          margin={{ top: 0, right: 10, left: 10, bottom: 20 }}
         >
           <defs>
-            <linearGradient id="gradientRed" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor="#ff0000" stopOpacity={0.6} />
-              <stop offset="100%" stopColor="#ff0000" stopOpacity={1} />
+            <linearGradient id="lineGradient" x1="0%" y1="0" x2="100%" y2="0">
+              <stop offset="0%" stopColor="rgba(255, 255, 255, 0.4)" />
+              <stop offset="100%" stopColor="rgba(255, 255, 255, 1)" />
             </linearGradient>
           </defs>
 
@@ -49,22 +50,28 @@ function AverageSessionsChart({ userId = 12 }) {
             dataKey="day"
             axisLine={false}
             tickLine={false}
-            tick={{ fill: "rgba(255,255,255,0.7)", fontSize: 12 }}
-            padding={{ left: 10, right: 10 }}
+            tick={{ fill: "rgba(255, 255, 255, 0.6)", fontSize: 12 }}
+            padding={{ left: 0, right: 0 }}
+            tickMargin={15}
           />
 
-          <Tooltip cursor={<CustomCursor />} content={<CustomTooltip />} />
+          <Tooltip
+            cursor={<CustomCursor />}
+            content={<CustomTooltip />}
+            wrapperStyle={{ outline: "none" }}
+          />
 
           <Line
-            type="monotone"
+            type="natural"
             dataKey="sessionLength"
-            stroke="white"
+            stroke="url(#lineGradient)"
             strokeWidth={2}
             dot={false}
             activeDot={{
-              r: 4,
+              r: 5,
               fill: "white",
-              strokeOpacity: 0.3,
+              stroke: "rgba(255, 255, 255, 0.3)",
+              strokeWidth: 8,
             }}
           />
         </LineChart>
@@ -73,23 +80,37 @@ function AverageSessionsChart({ userId = 12 }) {
   );
 }
 
-function CustomCursor({ points, width, height }) {
+/* --- Custom Cursor corrigé --- */
+function CustomCursor({ points, width, height, viewBox }) {
+  if (!points || points.length === 0) return null;
   const { x } = points[0];
+
   return (
     <Rectangle
       fill="rgba(0, 0, 0, 0.1)"
       x={x}
-      width={width - x}
-      height={height}
+      y={viewBox?.y || 0}
+      width={width}
+      height={viewBox?.height || height || 0}
     />
   );
 }
 
+/* --- Custom Tooltip inchangé --- */
 function CustomTooltip({ active, payload }) {
   if (active && payload && payload.length) {
     return (
-      <div className="custom-tooltip">
-        <p>{`${payload[0].value} min`}</p>
+      <div
+        style={{
+          backgroundColor: "white",
+          padding: "4px 8px",
+          borderRadius: "3px",
+          fontSize: "12px",
+          fontWeight: "500",
+          boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+        }}
+      >
+        {`${payload[0].value} min`}
       </div>
     );
   }

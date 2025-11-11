@@ -37,6 +37,17 @@ body {
 
 /* Main */
 
+.dashboard-container {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 2rem;
+  margin: 2rem;
+}
+
+.chart-container {
+  padding: 0;
+}
+
 .activity-chart {
   width: 100%;
   max-width: 900px;
@@ -46,20 +57,24 @@ body {
   margin: 0 auto;
 }
 
-.dashboard-container {
-  display: grid;
-  grid-template-columns: 3fr 1fr;
-  gap: 30px;
-  align-items: start;
-  margin-top: 25px;
-}
-
-.chart-container {
-  padding: 0;
-}
-
 .stat-container {
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+.stat-chart {
+  display: flex;
+  gap: 2rem;
+}
+.Graph2 {
+  height: 200px;
+  width: 250px;
+  background-color: rgb(230, 230, 230);
+}
+
+.Graph3 {
+  height: 200px;
+  width: 250px;
+  background-color: rgb(230, 230, 230);
 }

@@ -1,27 +1,17 @@
 .average-sessions-chart {
-  background: linear-gradient(90deg, #ff0000 0%, #e60000 100%);
+  background-color: #ff0000;
   border-radius: 5px;
-  position: relative;
-  height: 20%;
   padding: 20px;
-  color: white;
+  width: 100%;
+  max-width: 250px;
+  position: relative;
 }
 
-.chart-title {
-  position: absolute;
-  top: 20px;
-  left: 20px;
+.average-chart-title {
+  color: rgba(255, 255, 255, 0.6);
   font-size: 15px;
   font-weight: 500;
-  opacity: 0.7;
-  line-height: 1.2;
-  width: 150px;
-}
-
-.custom-tooltip {
-  background: white;
-  color: black;
-  font-size: 10px;
-  padding: 5px 8px;
-  text-align: center;
+  margin: 0 0 40px 20px;
+  max-width: 150px;
+  line-height: 1.5;
 }

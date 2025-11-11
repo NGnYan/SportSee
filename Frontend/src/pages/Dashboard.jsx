@@ -58,6 +58,11 @@ function Dashboard() {
             <div className="activity-chart">
               <ActivityBarChart />
             </div>
+            <div className="stat-chart">
+              <AverageSessionsChart />
+              <div className="Graph2"></div>
+              <div className="Graph3"></div>
+            </div>
           </div>
 
           <div className="stat-container">
