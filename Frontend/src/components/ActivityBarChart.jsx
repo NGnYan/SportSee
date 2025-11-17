@@ -84,7 +84,7 @@ export default function ActivityBarChart({ userId = 12 }) {
         <CustomLegend />
       </div>
 
-      <ResponsiveContainer width="100%" height={125}>
+      <ResponsiveContainer width="100%" height={140}>
         <BarChart
           data={activityData}
           margin={{ top: 10, right: 30, left: 20, bottom: 10 }}

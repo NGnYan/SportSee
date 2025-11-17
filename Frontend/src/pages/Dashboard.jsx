@@ -6,6 +6,8 @@ import NavbarTop from "../components/NavbarTop";
 import NavbarLeft from "../components/NavbarLeft";
 import ActivityBarChart from "../components/ActivityBarChart";
 import AverageSessionsChart from "../components/AverageSessionsChart";
+import RadarPerformance from "../components/RadarPerformance";
+import ScoreRadial from "../components/ScoreRadial";
 import StatCard from "../components/StatCard";
 
 /* ICONS */
@@ -60,8 +62,8 @@ function Dashboard() {
             </div>
             <div className="stat-chart">
               <AverageSessionsChart />
-              <div className="Graph2"></div>
-              <div className="Graph3"></div>
+              <RadarPerformance />
+              <ScoreRadial />
             </div>
           </div>
 

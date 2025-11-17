@@ -178,14 +178,87 @@ const USER_AVERAGE_SESSIONS = [
   },
 ];
 
-function simulateNetworkDelay(data, delay = 300) {
-  return new Promise((resolve) => setTimeout(() => resolve(data), delay));
-}
+const USER_PERFORMANCE = [
+  {
+    userId: 12,
+    kind: {
+      1: "cardio",
+      2: "energy",
+      3: "endurance",
+      4: "strength",
+      5: "speed",
+      6: "intensity",
+    },
+    data: [
+      {
+        value: 80,
+        kind: 1,
+      },
+      {
+        value: 120,
+        kind: 2,
+      },
+      {
+        value: 140,
+        kind: 3,
+      },
+      {
+        value: 50,
+        kind: 4,
+      },
+      {
+        value: 200,
+        kind: 5,
+      },
+      {
+        value: 90,
+        kind: 6,
+      },
+    ],
+  },
+  {
+    userId: 18,
+    kind: {
+      1: "cardio",
+      2: "energy",
+      3: "endurance",
+      4: "strength",
+      5: "speed",
+      6: "intensity",
+    },
+    data: [
+      {
+        value: 200,
+        kind: 1,
+      },
+      {
+        value: 240,
+        kind: 2,
+      },
+      {
+        value: 80,
+        kind: 3,
+      },
+      {
+        value: 80,
+        kind: 4,
+      },
+      {
+        value: 220,
+        kind: 5,
+      },
+      {
+        value: 110,
+        kind: 6,
+      },
+    ],
+  },
+];
 
 export async function getUserMainData(userId) {
   if (USE_MOCK) {
     const user = USER_MAIN_DATA.find((u) => u.id === userId);
-    return simulateNetworkDelay(user);
+    return user;
   } else {
     const res = await fetch(`${API_BASE_URL}/user/${userId}`);
     const data = await res.json();
@@ -198,7 +271,7 @@ export async function getUserActivity(userId) {
     const userActivity = USER_ACTIVITY.find((u) => u.userId === userId);
     if (!userActivity)
       throw new Error(`Activité pour user ${userId} introuvable`);
-    return simulateNetworkDelay(userActivity);
+    return userActivity;
   } else {
     const res = await fetch(`${API_BASE_URL}/user/${userId}/activity`);
     const data = await res.json();
@@ -211,9 +284,22 @@ export async function getUserAverageSessions(userId) {
     const userAverage = USER_AVERAGE_SESSIONS.find((u) => u.userId === userId);
     if (!userAverage)
       throw new Error(`Sessions moyennes pour user ${userId} introuvables`);
-    return simulateNetworkDelay(userAverage);
+    return userAverage;
   } else {
     const res = await fetch(`${API_BASE_URL}/user/${userId}/average-sessions`);
+    const data = await res.json();
+    return data.data;
+  }
+}
+
+export async function getUserPerformance(userId) {
+  if (USE_MOCK) {
+    const userPerformance = USER_PERFORMANCE.find((u) => u.userId === userId);
+    if (!userPerformance)
+      throw new Error(`Performance du user ${userId} introuvable`);
+    return userPerformance;
+  } else {
+    const res = await fetch(`${API_BASE_URL}/user/${userId}/performance`);
     const data = await res.json();
     return data.data;
   }

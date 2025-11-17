@@ -17,7 +17,7 @@ body {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   font-size: 2rem;
   margin: 0;
 }
@@ -38,13 +38,19 @@ body {
 /* Main */
 
 .dashboard-container {
-  display: grid;
-  grid-template-columns: 3fr 1fr;
-  gap: 2rem;
-  margin: 2rem;
+  margin: 1rem auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  max-width: 1100px;
 }
 
 .chart-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  gap: 1rem;
   padding: 0;
 }
 
@@ -60,21 +66,16 @@ body {
 .stat-container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 2rem;
 }
 
 .stat-chart {
   display: flex;
   gap: 2rem;
 }
-.Graph2 {
-  height: 200px;
-  width: 250px;
-  background-color: rgb(230, 230, 230);
-}
 
-.Graph3 {
-  height: 200px;
-  width: 250px;
-  background-color: rgb(230, 230, 230);
+.stat-chart > * {
+  flex: 1;
+  min-width: 0;
+  display: flex;
 }

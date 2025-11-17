@@ -1,0 +1,8 @@
+.radar-container {
+  width: 100%;
+  max-width: 500px;
+  max-height: 220px;
+  aspect-ratio: 1;
+  background-color: #282d30;
+  border-radius: 5px;
+}
