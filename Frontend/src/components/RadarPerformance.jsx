@@ -54,24 +54,27 @@ export const RadarPerformance = ({ userId }) => {
   };
 
   return (
-    <RadarChart
-      className="radar-container"
-      data={data}
-      margin={{ top: 10, right: 10, bottom: 10, left: 10 }}
-    >
-      <PolarGrid radialLines={false} />
-      <PolarAngleAxis
-        dataKey="subject"
-        tick={{ fontSize: "0.8rem", fill: "#fff" }}
-        tickFormatter={formatTick}
-      />
-      <Radar
-        dataKey="value"
-        fill="#ff0000ff"
-        fillOpacity={0.6}
-        activeDot={false}
-      />
-    </RadarChart>
+    <div className="radar-container">
+      <RadarChart
+        width={258}
+        height={200}
+        data={data}
+        margin={{ top: 10, right: 10, bottom: 10, left: 10 }}
+      >
+        <PolarGrid radialLines={false} />
+        <PolarAngleAxis
+          dataKey="subject"
+          tick={{ fontSize: 12, fill: "#fff" }}
+          tickFormatter={formatTick}
+        />
+        <Radar
+          dataKey="value"
+          fill="#ff0000ff"
+          fillOpacity={0.6}
+          activeDot={false}
+        />
+      </RadarChart>
+    </div>
   );
 };
 
