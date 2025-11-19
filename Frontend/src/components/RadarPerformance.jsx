@@ -1,60 +1,78 @@
+import { useEffect, useState } from "react";
 import "../styles/components/RadarPerformance.css";
 import { RadarChart, Radar, PolarAngleAxis, PolarGrid } from "recharts";
+import { getUserPerformance } from "../services/api";
 
-const data = [
-  {
-    subject: "Math",
-    A: 120,
-    B: 110,
-    fullMark: 150,
-  },
-  {
-    subject: "Chinese",
-    A: 98,
-    B: 130,
-    fullMark: 150,
-  },
-  {
-    subject: "English",
-    A: 86,
-    B: 130,
-    fullMark: 150,
-  },
-  {
-    subject: "Geography",
-    A: 99,
-    B: 100,
-    fullMark: 150,
-  },
-  {
-    subject: "Physics",
-    A: 85,
-    B: 90,
-    fullMark: 150,
-  },
-  {
-    subject: "History",
-    A: 65,
-    B: 85,
-    fullMark: 150,
-  },
-];
+export const RadarPerformance = ({ userId }) => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-export const RadarChartExample = () => (
-  <RadarChart
-    className="radar-container"
-    responsive
-    data={data}
-    margin={{ top: 10, right: 10, bottom: 10, left: 10 }}
-  >
-    <PolarGrid radialLines={false} />
-    <PolarAngleAxis
-      dataKey="subject"
-      tick={{ fontSize: "0.7rem", fill: "#fff" }}
-      domain={[0, 100]}
-    />
+  useEffect(() => {
+    const fetchPerformance = async () => {
+      try {
+        setLoading(true);
+        const performance = await getUserPerformance(userId);
 
-    <Radar dataKey="A" fill="#ff0000ff" fillOpacity={0.6} activeDot={false} />
-  </RadarChart>
-);
-export default RadarChartExample;
+        const kindFR = {
+          cardio: "Cardio",
+          energy: "Énergie",
+          endurance: "Endurance",
+          strength: "Force",
+          speed: "Vitesse",
+          intensity: "Intensité",
+        };
+
+        const transformedData = performance.data.map((item) => ({
+          subject:
+            kindFR[performance.kind[item.kind]] || performance.kind[item.kind],
+          value: item.value,
+        }));
+
+        setData(transformedData);
+        setError(null);
+      } catch (err) {
+        setError(err.message);
+        console.error("Erreur lors du chargement des performances:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (userId) {
+      fetchPerformance();
+    }
+  }, [userId]);
+
+  if (loading) return <div className="radar-container">Chargement...</div>;
+  if (error) return <div className="radar-container">Erreur: {error}</div>;
+  if (!data.length) return <div className="radar-container">Aucune donnée</div>;
+
+  const formatTick = (tick) => {
+    if (!tick) return "";
+    return tick.charAt(0).toUpperCase() + tick.slice(1).toLowerCase();
+  };
+
+  return (
+    <RadarChart
+      className="radar-container"
+      data={data}
+      margin={{ top: 10, right: 10, bottom: 10, left: 10 }}
+    >
+      <PolarGrid radialLines={false} />
+      <PolarAngleAxis
+        dataKey="subject"
+        tick={{ fontSize: "0.8rem", fill: "#fff" }}
+        tickFormatter={formatTick}
+      />
+      <Radar
+        dataKey="value"
+        fill="#ff0000ff"
+        fillOpacity={0.6}
+        activeDot={false}
+      />
+    </RadarChart>
+  );
+};
+
+export default RadarPerformance;

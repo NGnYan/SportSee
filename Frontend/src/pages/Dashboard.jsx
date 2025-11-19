@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import "../styles/pages/Dashboard.css";
 import WelcomeBanner from "../components/WelcomeBanner";
 import { getUserMainData } from "../services/api";
@@ -18,7 +19,8 @@ import lipidIcon from "../assets/lipid.svg";
 
 function Dashboard() {
   const [user, setUser] = useState(null);
-  const userId = 12;
+  const { id } = useParams();
+  const userId = parseInt(id) || 12;
 
   useEffect(() => {
     getUserMainData(userId)
@@ -61,9 +63,9 @@ function Dashboard() {
               <ActivityBarChart />
             </div>
             <div className="stat-chart">
-              <AverageSessionsChart />
-              <RadarPerformance />
-              <ScoreRadial />
+              <AverageSessionsChart userId={user.id} />
+              <RadarPerformance userId={user.id} />
+              <ScoreRadial userId={user.id} />
             </div>
           </div>
 
