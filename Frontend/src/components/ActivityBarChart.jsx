@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react";
 import {
+  ResponsiveContainer,
   BarChart,
   Bar,
   XAxis,
   YAxis,
   Tooltip,
   CartesianGrid,
-  ResponsiveContainer,
 } from "recharts";
 import { getUserActivity } from "../services/api";
+import { useFetchData } from "../hooks/useFetchData";
 import "../styles/components/ActivityBarChart.css";
 
 const CustomTooltip = ({ active, payload }) => {
@@ -39,32 +39,32 @@ const CustomLegend = () => (
   </div>
 );
 
-export default function ActivityBarChart({ userId = 12 }) {
-  const [activityData, setActivityData] = useState(null);
-  const [loading, setLoading] = useState(true);
+const transformActivity = (data) => {
+  if (!data || !data.sessions) return [];
+  return data.sessions.map((session, index) => ({
+    day: index + 1,
+    kilogram: session.kilogram,
+    calories: session.calories,
+  }));
+};
 
-  useEffect(() => {
-    setLoading(true);
-    getUserActivity(userId)
-      .then((data) => {
-        if (!data || !data.sessions) {
-          console.error("Aucune donnée d'activité disponible");
-          setActivityData([]);
-          return;
-        }
-        const formatted = data.sessions.map((session, index) => ({
-          day: index + 1,
-          kilogram: session.kilogram,
-          calories: session.calories,
-        }));
-        setActivityData(formatted);
-      })
-      .catch((err) => console.error("Erreur récupération activité:", err))
-      .finally(() => setLoading(false));
-  }, [userId]);
+function ActivityBarChart({ userId = 12 }) {
+  const {
+    data: activityData,
+    loading,
+    error,
+  } = useFetchData(getUserActivity, userId, transformActivity);
 
   if (loading) {
     return <div>Chargement du graphique...</div>;
+  }
+
+  if (error) {
+    return (
+      <div className="activity-chart-container">
+        Impossible de récupérer les données pour cet utilisateur.
+      </div>
+    );
   }
 
   if (!activityData || activityData.length === 0) {
@@ -141,3 +141,5 @@ export default function ActivityBarChart({ userId = 12 }) {
     </div>
   );
 }
+
+export default ActivityBarChart;

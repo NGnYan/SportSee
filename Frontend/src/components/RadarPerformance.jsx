@@ -1,59 +1,45 @@
-import { useEffect, useState } from "react";
 import "../styles/components/RadarPerformance.css";
 import { RadarChart, Radar, PolarAngleAxis, PolarGrid } from "recharts";
 import { getUserPerformance } from "../services/api";
+import { useFetchData } from "../hooks/useFetchData";
 
-export const RadarPerformance = ({ userId }) => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+const transformPerformance = (performance) => {
+  if (!performance || !performance.data) return [];
+  const kindFR = {
+    cardio: "Cardio",
+    energy: "Énergie",
+    endurance: "Endurance",
+    strength: "Force",
+    speed: "Vitesse",
+    intensity: "Intensité",
+  };
 
-  useEffect(() => {
-    const fetchPerformance = async () => {
-      try {
-        setLoading(true);
-        const performance = await getUserPerformance(userId);
+  return performance.data.map((item) => ({
+    subject: kindFR[performance.kind[item.kind]] || performance.kind[item.kind],
+    value: item.value,
+  }));
+};
 
-        const kindFR = {
-          cardio: "Cardio",
-          energy: "Énergie",
-          endurance: "Endurance",
-          strength: "Force",
-          speed: "Vitesse",
-          intensity: "Intensité",
-        };
-
-        const transformedData = performance.data.map((item) => ({
-          subject:
-            kindFR[performance.kind[item.kind]] || performance.kind[item.kind],
-          value: item.value,
-        }));
-
-        setData(transformedData);
-        setError(null);
-      } catch (err) {
-        setError(err.message);
-        console.error("Erreur lors du chargement des performances:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (userId) {
-      fetchPerformance();
-    }
-  }, [userId]);
+const RadarPerformance = ({ userId }) => {
+  const { data, loading, error } = useFetchData(
+    getUserPerformance,
+    userId,
+    transformPerformance
+  );
 
   if (loading)
     return <div className="radar-container-loader">Chargement...</div>;
-  if (error) return <div className="radar-container-loader">{error}</div>;
-  if (!data.length)
+  if (error)
+    return (
+      <div className="radar-container-loader">
+        Impossible de récupérer les performances
+      </div>
+    );
+  if (!data || data.length === 0)
     return <div className="radar-container-loader">Aucune donnée</div>;
 
-  const formatTick = (tick) => {
-    if (!tick) return "";
-    return tick.charAt(0).toUpperCase() + tick.slice(1).toLowerCase();
-  };
+  const formatTick = (tick) =>
+    tick?.charAt(0).toUpperCase() + tick?.slice(1).toLowerCase();
 
   return (
     <div className="radar-container">

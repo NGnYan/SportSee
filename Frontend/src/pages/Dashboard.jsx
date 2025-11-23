@@ -1,8 +1,6 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "../styles/pages/Dashboard.css";
 import WelcomeBanner from "../components/WelcomeBanner";
-import { getUserMainData } from "../services/api";
 import NavbarTop from "../components/NavbarTop";
 import NavbarLeft from "../components/NavbarLeft";
 import ActivityBarChart from "../components/ActivityBarChart";
@@ -10,6 +8,7 @@ import AverageSessionsChart from "../components/AverageSessionsChart";
 import RadarPerformance from "../components/RadarPerformance";
 import ScoreRadial from "../components/ScoreRadial";
 import StatCard from "../components/StatCard";
+import { useFetchData } from "../hooks/useFetchData";
 
 /* ICONS */
 import calorieIcon from "../assets/calories.svg";
@@ -17,18 +16,21 @@ import proteinIcon from "../assets/protein.svg";
 import carbohydrateIcon from "../assets/carbohydrate.svg";
 import lipidIcon from "../assets/lipid.svg";
 
+import { getUserMainData } from "../services/api";
+
 function Dashboard() {
-  const [user, setUser] = useState(null);
   const { id } = useParams();
   const userId = parseInt(id) || 12;
 
-  useEffect(() => {
-    getUserMainData(userId)
-      .then((data) => setUser(data))
-      .catch((err) => console.error("Erreur récupération user:", err));
-  }, [userId]);
+  const transformUser = (data) => data;
 
-  if (!user)
+  const {
+    data: user,
+    loading,
+    error,
+  } = useFetchData(getUserMainData, userId, transformUser);
+
+  if (loading) {
     return (
       <div className="loader-container">
         <svg
@@ -44,6 +46,11 @@ function Dashboard() {
         </svg>
       </div>
     );
+  }
+
+  if (error) {
+    return <div>Impossible de récupérer les données de l’utilisateur.</div>;
+  }
 
   const firstName = user.userInfos.firstName;
   const message = "Félicitation ! Vous avez explosé vos objectifs hier 👏";
@@ -60,12 +67,12 @@ function Dashboard() {
         <div className="dashboard-container">
           <div className="chart-container">
             <div className="activity-chart">
-              <ActivityBarChart />
+              <ActivityBarChart userId={userId} />
             </div>
             <div className="stat-chart">
-              <AverageSessionsChart userId={user.id} />
-              <RadarPerformance userId={user.id} />
-              <ScoreRadial userId={user.id} />
+              <AverageSessionsChart userId={userId} />
+              <RadarPerformance userId={userId} />
+              <ScoreRadial userId={userId} />
             </div>
           </div>
 

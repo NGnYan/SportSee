@@ -1,42 +1,25 @@
-import React, { useState, useEffect } from "react";
 import {
+  ResponsiveContainer,
   RadialBarChart,
   RadialBar,
   PolarAngleAxis,
-  ResponsiveContainer,
 } from "recharts";
 import { getUserMainData } from "../services/api";
+import { useFetchData } from "../hooks/useFetchData";
 import "../styles/components/ScoreRadial.css";
 
-function ScoreRadial({ userId }) {
-  const [score, setScore] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+const transformScore = (userData) => {
+  if (!userData) return 0;
+  const score = userData.todayScore ?? userData.score ?? 0;
+  return score < 1 ? Math.round(score * 100) : Math.round(score);
+};
 
-  useEffect(() => {
-    async function fetchScore() {
-      try {
-        setLoading(true);
-        const userData = await getUserMainData(userId);
-
-        const userScore = userData.todayScore ?? userData.score ?? 0;
-
-        const scorePercentage = userScore < 1 ? userScore * 100 : userScore;
-
-        setScore(Math.round(scorePercentage));
-        setError(null);
-      } catch (err) {
-        console.error("Erreur lors du chargement du score:", err);
-        setError("Impossible de récupérer votre score pour le moment.");
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    if (userId) {
-      fetchScore();
-    }
-  }, [userId]);
+const ScoreRadial = ({ userId }) => {
+  const {
+    data: score,
+    loading,
+    error,
+  } = useFetchData(getUserMainData, userId, transformScore);
 
   if (loading) {
     return (
@@ -62,13 +45,7 @@ function ScoreRadial({ userId }) {
     );
   }
 
-  const data = [
-    {
-      name: "Score",
-      value: score,
-      fill: "#ef4444",
-    },
-  ];
+  const data = [{ name: "Score", value: score, fill: "#ef4444" }];
 
   return (
     <div className="score-wrapper">
@@ -102,6 +79,6 @@ function ScoreRadial({ userId }) {
       </div>
     </div>
   );
-}
+};
 
 export default ScoreRadial;

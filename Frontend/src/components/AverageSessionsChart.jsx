@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import {
   LineChart,
   Line,
@@ -9,6 +8,7 @@ import {
 } from "recharts";
 import "../styles/components/AverageSessionsChart.css";
 import { getUserAverageSessions } from "../services/api";
+import { useFetchData } from "../hooks/useFetchData";
 
 function CustomTooltip({ active, payload }) {
   if (!active || !payload || payload.length === 0) return null;
@@ -16,21 +16,31 @@ function CustomTooltip({ active, payload }) {
   return <div className="avg-tooltip">{payload[0].value} min</div>;
 }
 
+const transformSessions = (data) => {
+  if (!data || !data.sessions) return [];
+  const days = ["L", "M", "M", "J", "V", "S", "D"];
+  return data.sessions.map((s, i) => ({
+    day: days[i],
+    sessionLength: s.sessionLength,
+  }));
+};
+
 function AverageSessionsChart({ userId }) {
-  const [sessions, setSessions] = useState(null);
+  const {
+    data: sessions,
+    loading,
+    error,
+  } = useFetchData(getUserAverageSessions, userId, transformSessions);
 
-  useEffect(() => {
-    getUserAverageSessions(userId).then((data) => {
-      const days = ["L", "M", "M", "J", "V", "S", "D"];
-      const formatted = data.sessions.map((s, i) => ({
-        day: days[i],
-        sessionLength: s.sessionLength,
-      }));
-      setSessions(formatted);
-    });
-  }, [userId]);
-
-  if (!sessions) return <div className="avg-chart-loader">Chargement…</div>;
+  if (loading) return <div className="avg-chart-loader">Chargement…</div>;
+  if (error)
+    return (
+      <div className="avg-chart-loader">
+        Impossible de récupérer les sessions.
+      </div>
+    );
+  if (!sessions || sessions.length === 0)
+    return <div className="avg-chart-loader">Aucune donnée</div>;
 
   return (
     <div className="avg-chart-container">
@@ -48,9 +58,7 @@ function AverageSessionsChart({ userId }) {
             tick={{ fill: "rgba(255, 255, 255, 0.6)", fontSize: 14 }}
             padding={{ left: 30, right: 30 }}
           />
-
           <Tooltip content={<CustomTooltip />} cursor={false} />
-
           <Line
             type="monotone"
             dataKey="sessionLength"
@@ -59,10 +67,7 @@ function AverageSessionsChart({ userId }) {
             strokeLinecap="round"
             strokeLinejoin="round"
             dot={false}
-            activeDot={{
-              r: 6,
-              fill: "#fff",
-            }}
+            activeDot={{ r: 6, fill: "#fff" }}
             animationDuration={1200}
           />
         </LineChart>
