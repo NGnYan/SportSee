@@ -27,7 +27,7 @@ function ScoreRadial({ userId }) {
         setError(null);
       } catch (err) {
         console.error("Erreur lors du chargement du score:", err);
-        setError(err.message);
+        setError("Impossible de récupérer votre score pour le moment.");
       } finally {
         setLoading(false);
       }
@@ -42,8 +42,7 @@ function ScoreRadial({ userId }) {
     return (
       <div className="score-wrapper">
         <div className="score-card">
-          <h3 className="score-title">Score</h3>
-          <div className="score-container">
+          <div className="score-container-msg">
             <p>Chargement...</p>
           </div>
         </div>
@@ -55,9 +54,8 @@ function ScoreRadial({ userId }) {
     return (
       <div className="score-wrapper">
         <div className="score-card">
-          <h3 className="score-title">Score</h3>
-          <div className="score-container">
-            <p>Erreur: {error}</p>
+          <div className="score-container-msg">
+            <p>{error}</p>
           </div>
         </div>
       </div>

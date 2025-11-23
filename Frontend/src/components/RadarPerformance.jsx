@@ -44,9 +44,11 @@ export const RadarPerformance = ({ userId }) => {
     }
   }, [userId]);
 
-  if (loading) return <div className="radar-container">Chargement...</div>;
-  if (error) return <div className="radar-container">Erreur: {error}</div>;
-  if (!data.length) return <div className="radar-container">Aucune donnée</div>;
+  if (loading)
+    return <div className="radar-container-loader">Chargement...</div>;
+  if (error) return <div className="radar-container-loader">{error}</div>;
+  if (!data.length)
+    return <div className="radar-container-loader">Aucune donnée</div>;
 
   const formatTick = (tick) => {
     if (!tick) return "";

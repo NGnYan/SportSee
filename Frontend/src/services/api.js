@@ -270,7 +270,7 @@ export async function getUserActivity(userId) {
   if (USE_MOCK) {
     const userActivity = USER_ACTIVITY.find((u) => u.userId === userId);
     if (!userActivity)
-      throw new Error(`Activité pour user ${userId} introuvable`);
+      throw new Error(`Activité pour l'utilisateur ${userId} introuvable`);
     return userActivity;
   } else {
     const res = await fetch(`${API_BASE_URL}/user/${userId}/activity`);
@@ -283,7 +283,9 @@ export async function getUserAverageSessions(userId) {
   if (USE_MOCK) {
     const userAverage = USER_AVERAGE_SESSIONS.find((u) => u.userId === userId);
     if (!userAverage)
-      throw new Error(`Sessions moyennes pour user ${userId} introuvables`);
+      throw new Error(
+        `Sessions moyennes pour l'utilisateur ${userId} introuvables`
+      );
     return userAverage;
   } else {
     const res = await fetch(`${API_BASE_URL}/user/${userId}/average-sessions`);
@@ -296,7 +298,7 @@ export async function getUserPerformance(userId) {
   if (USE_MOCK) {
     const userPerformance = USER_PERFORMANCE.find((u) => u.userId === userId);
     if (!userPerformance)
-      throw new Error(`Performance du user ${userId} introuvable`);
+      throw new Error(`Performance de l'utilisateur ${userId} introuvable`);
     return userPerformance;
   } else {
     const res = await fetch(`${API_BASE_URL}/user/${userId}/performance`);

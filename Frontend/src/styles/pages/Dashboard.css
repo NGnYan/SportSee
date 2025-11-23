@@ -41,11 +41,11 @@ body {
   margin: 1rem auto;
   display: flex;
   justify-content: space-between;
-  gap: 1.5rem;
+  gap: 2rem;
   width: 100%;
   max-width: none;
   margin: 0 auto;
-  padding: 0 4%;
+  padding: 0 8%;
 }
 
 .chart-container {
@@ -63,6 +63,9 @@ body {
   border-radius: 5px;
   background-color: #fbfbfb;
   margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .stat-container {

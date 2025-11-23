@@ -30,7 +30,7 @@ function AverageSessionsChart({ userId }) {
     });
   }, [userId]);
 
-  if (!sessions) return <div>Chargement…</div>;
+  if (!sessions) return <div className="avg-chart-loader">Chargement…</div>;
 
   return (
     <div className="avg-chart-container">

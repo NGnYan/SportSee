@@ -1,3 +1,10 @@
+.score-container-msg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
 .score-wrapper {
   background: #fbfbfb;
   border-radius: 5px;

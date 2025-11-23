@@ -64,9 +64,7 @@ export default function ActivityBarChart({ userId = 12 }) {
   }, [userId]);
 
   if (loading) {
-    return (
-      <div className="activity-chart-container">Chargement du graphique...</div>
-    );
+    return <div>Chargement du graphique...</div>;
   }
 
   if (!activityData || activityData.length === 0) {
