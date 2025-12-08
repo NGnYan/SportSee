@@ -39,21 +39,12 @@ const CustomLegend = () => (
   </div>
 );
 
-const transformActivity = (data) => {
-  if (!data || !data.sessions) return [];
-  return data.sessions.map((session, index) => ({
-    day: index + 1,
-    kilogram: session.kilogram,
-    calories: session.calories,
-  }));
-};
-
-function ActivityBarChart({ userId = 12 }) {
+function ActivityBarChart({ userId }) {
   const {
     data: activityData,
     loading,
     error,
-  } = useFetchData(getUserActivity, userId, transformActivity);
+  } = useFetchData(getUserActivity, userId, "activity");
 
   if (loading) {
     return <div>Chargement du graphique...</div>;

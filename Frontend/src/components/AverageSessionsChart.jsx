@@ -1,6 +1,6 @@
 import {
-  LineChart,
-  Line,
+  AreaChart,
+  Area,
   XAxis,
   Tooltip,
   ResponsiveContainer,
@@ -16,21 +16,12 @@ function CustomTooltip({ active, payload }) {
   return <div className="avg-tooltip">{payload[0].value} min</div>;
 }
 
-const transformSessions = (data) => {
-  if (!data || !data.sessions) return [];
-  const days = ["L", "M", "M", "J", "V", "S", "D"];
-  return data.sessions.map((s, i) => ({
-    day: days[i],
-    sessionLength: s.sessionLength,
-  }));
-};
-
 function AverageSessionsChart({ userId }) {
   const {
     data: sessions,
     loading,
     error,
-  } = useFetchData(getUserAverageSessions, userId, transformSessions);
+  } = useFetchData(getUserAverageSessions, userId, "sessions");
 
   if (loading) return <div className="avg-chart-loader">Chargement…</div>;
   if (error)
@@ -47,10 +38,25 @@ function AverageSessionsChart({ userId }) {
       <div className="avg-chart-title">Durée moyenne des sessions</div>
 
       <ResponsiveContainer>
-        <LineChart
+        <AreaChart
           data={sessions}
           margin={{ top: 60, right: 0, left: 0, bottom: 20 }}
         >
+          <defs>
+            <linearGradient id="colorSession" x1="0" y1="0" x2="0" y2="1">
+              <stop
+                offset="5%"
+                stopColor="rgba(255,255,255,0.4)"
+                stopOpacity={0.8}
+              />
+              <stop
+                offset="95%"
+                stopColor="rgba(255,255,255,0.1)"
+                stopOpacity={0.1}
+              />
+            </linearGradient>
+          </defs>
+
           <XAxis
             dataKey="day"
             axisLine={false}
@@ -58,19 +64,22 @@ function AverageSessionsChart({ userId }) {
             tick={{ fill: "rgba(255, 255, 255, 0.6)", fontSize: 14 }}
             padding={{ left: 30, right: 30 }}
           />
-          <Tooltip content={<CustomTooltip />} cursor={false} />
-          <Line
+
+          <Tooltip
+            content={<CustomTooltip />}
+            cursor={<Rectangle fill="rgba(0,0,0,0.15)" />}
+          />
+
+          <Area
             type="monotone"
             dataKey="sessionLength"
             stroke="rgba(255,255,255,0.8)"
-            strokeWidth={2.5}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            dot={false}
+            strokeWidth={2}
+            fill="url(#colorSession)"
             activeDot={{ r: 6, fill: "#fff" }}
             animationDuration={1200}
           />
-        </LineChart>
+        </AreaChart>
       </ResponsiveContainer>
     </div>
   );

@@ -1,0 +1,18 @@
+.notfound-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.notfound-bubble {
+  background-color: #ff4d4f;
+  color: #fff;
+  padding: 0px 50px;
+  border-radius: 10px;
+  font-size: 2rem;
+  font-weight: 500;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 800px;
+}

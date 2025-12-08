@@ -18,14 +18,14 @@
 .navbar-logo {
   display: flex;
   align-items: center;
-  margin-right: 10vw;
+  margin-right: 3rem;
 }
 
 /* Links */
 .navbar-links {
   list-style: none;
   display: flex;
-  gap: 16rem;
+  gap: 9rem;
   margin: 0;
   padding: 0;
   flex: 1;
@@ -40,4 +40,16 @@
 
 .navbar-links li:hover {
   color: #e60000;
+}
+
+@media screen and (min-width: 1440px) {
+  .navbar-links {
+    gap: 16vw;
+  }
+}
+
+@media screen and (min-width: 2560px) {
+  .navbar-links {
+    gap: 20vw;
+  }
 }

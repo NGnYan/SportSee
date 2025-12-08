@@ -3,28 +3,11 @@ import { RadarChart, Radar, PolarAngleAxis, PolarGrid } from "recharts";
 import { getUserPerformance } from "../services/api";
 import { useFetchData } from "../hooks/useFetchData";
 
-const transformPerformance = (performance) => {
-  if (!performance || !performance.data) return [];
-  const kindFR = {
-    cardio: "Cardio",
-    energy: "Énergie",
-    endurance: "Endurance",
-    strength: "Force",
-    speed: "Vitesse",
-    intensity: "Intensité",
-  };
-
-  return performance.data.map((item) => ({
-    subject: kindFR[performance.kind[item.kind]] || performance.kind[item.kind],
-    value: item.value,
-  }));
-};
-
 const RadarPerformance = ({ userId }) => {
   const { data, loading, error } = useFetchData(
     getUserPerformance,
     userId,
-    transformPerformance
+    "performance"
   );
 
   if (loading)

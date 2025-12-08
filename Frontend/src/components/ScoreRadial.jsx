@@ -8,18 +8,12 @@ import { getUserMainData } from "../services/api";
 import { useFetchData } from "../hooks/useFetchData";
 import "../styles/components/ScoreRadial.css";
 
-const transformScore = (userData) => {
-  if (!userData) return 0;
-  const score = userData.todayScore ?? userData.score ?? 0;
-  return score < 1 ? Math.round(score * 100) : Math.round(score);
-};
-
 const ScoreRadial = ({ userId }) => {
   const {
     data: score,
     loading,
     error,
-  } = useFetchData(getUserMainData, userId, transformScore);
+  } = useFetchData(getUserMainData, userId, "score");
 
   if (loading) {
     return (

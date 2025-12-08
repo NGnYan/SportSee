@@ -15,8 +15,8 @@
 
 .score-container {
   position: relative;
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 180px;
   margin: 0 auto;
 }
 
@@ -34,7 +34,9 @@
 
 .score-title {
   margin: 0;
+  font-size: 0.8rem;
   font-weight: normal;
   position: relative;
   top: 20px;
+  left: 15px;
 }

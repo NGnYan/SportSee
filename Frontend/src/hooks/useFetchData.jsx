@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
+import { transformFactory } from "../services/transformData";
 
-export function useFetchData(fetchFunction, userId, transform = (d) => d) {
+export function useFetchData(fetchFunction, userId, transformType = null) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -11,9 +12,11 @@ export function useFetchData(fetchFunction, userId, transform = (d) => d) {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const result = await fetchFunction(userId);
+        const raw = await fetchFunction(userId);
 
-        const formatted = transform(result);
+        const transform = transformFactory(transformType);
+        const formatted = transform(raw);
+
         setData(formatted);
         setError(null);
       } catch (err) {
@@ -25,7 +28,7 @@ export function useFetchData(fetchFunction, userId, transform = (d) => d) {
     };
 
     fetchData();
-  }, [fetchFunction, userId, transform]);
+  }, [fetchFunction, userId, transformType]);
 
   return { data, loading, error };
 }

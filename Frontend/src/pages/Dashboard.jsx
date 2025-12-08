@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import "../styles/pages/Dashboard.css";
 import WelcomeBanner from "../components/WelcomeBanner";
 import NavbarTop from "../components/NavbarTop";
@@ -20,15 +20,15 @@ import { getUserMainData } from "../services/api";
 
 function Dashboard() {
   const { id } = useParams();
-  const userId = parseInt(id) || 12;
+  const userId = parseInt(id);
+  const { data: user, loading, error } = useFetchData(getUserMainData, userId);
 
-  const transformUser = (data) => data;
+  const navigate = useNavigate();
 
-  const {
-    data: user,
-    loading,
-    error,
-  } = useFetchData(getUserMainData, userId, transformUser);
+  if (!loading && !user) {
+    navigate("/error");
+    return null;
+  }
 
   if (loading) {
     return (
