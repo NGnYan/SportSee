@@ -44,16 +44,8 @@ function AverageSessionsChart({ userId }) {
         >
           <defs>
             <linearGradient id="colorSession" x1="0" y1="0" x2="0" y2="1">
-              <stop
-                offset="5%"
-                stopColor="rgba(255,255,255,0.4)"
-                stopOpacity={0.8}
-              />
-              <stop
-                offset="95%"
-                stopColor="rgba(255,255,255,0.1)"
-                stopOpacity={0.1}
-              />
+              <stop offset="0%" stopColor="rgba(0, 0, 0, 0.05)" />
+              <stop offset="100%" stopColor="rgba(0, 0, 0, 0)" />
             </linearGradient>
           </defs>
 
@@ -67,7 +59,20 @@ function AverageSessionsChart({ userId }) {
 
           <Tooltip
             content={<CustomTooltip />}
-            cursor={<Rectangle fill="rgba(0,0,0,0.15)" />}
+            cursor={(props) => {
+              const { x, height } = props;
+
+              return (
+                <Rectangle
+                  x={x - 30}
+                  y={0}
+                  width={60}
+                  height={height}
+                  fill="rgba(0,0,0,0.15)"
+                  radius={0}
+                />
+              );
+            }}
           />
 
           <Area
@@ -76,7 +81,12 @@ function AverageSessionsChart({ userId }) {
             stroke="rgba(255,255,255,0.8)"
             strokeWidth={2}
             fill="url(#colorSession)"
-            activeDot={{ r: 6, fill: "#fff" }}
+            activeDot={{
+              r: 6,
+              fill: "#fff",
+              stroke: "rgba(255,255,255,0.3)",
+              strokeWidth: 10,
+            }}
             animationDuration={1200}
           />
         </AreaChart>
