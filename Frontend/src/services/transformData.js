@@ -1,4 +1,4 @@
-export function transformFactory(type = "none") {
+export function transformFactory(type = null) {
   const transforms = {
     none: (userData) => userData,
 

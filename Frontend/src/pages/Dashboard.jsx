@@ -27,6 +27,7 @@ function Dashboard() {
 
   if (!loading && !user) {
     navigate("/error");
+    console.log("teste");
     return null;
   }
 
