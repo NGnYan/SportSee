@@ -9,6 +9,7 @@ import {
 } from "recharts";
 import { getUserActivity } from "../services/api";
 import { useFetchData } from "../hooks/useFetchData";
+import LoaderError from "./LoaderError";
 import "../styles/components/ActivityBarChart.css";
 
 const CustomTooltip = ({ active, payload }) => {
@@ -46,23 +47,18 @@ function ActivityBarChart({ userId }) {
     error,
   } = useFetchData(getUserActivity, userId, "activity");
 
-  if (loading) {
-    return <div>Chargement du graphique...</div>;
-  }
+  const isEmpty = !activityData || activityData.length === 0;
 
-  if (error) {
+  if (loading || error || isEmpty) {
     return (
-      <div className="activity-chart-container">
-        Impossible de récupérer les données pour cet utilisateur.
-      </div>
-    );
-  }
-
-  if (!activityData || activityData.length === 0) {
-    return (
-      <div className="activity-chart-container">
-        Aucune donnée disponible pour cet utilisateur.
-      </div>
+      <LoaderError
+        loading={loading}
+        error={error}
+        empty={isEmpty}
+        loadingMessage="Chargement du graphique..."
+        errorMessage="Impossible de récupérer les données pour cet utilisateur."
+        emptyMessage="Aucune donnée disponible pour cet utilisateur."
+      />
     );
   }
 

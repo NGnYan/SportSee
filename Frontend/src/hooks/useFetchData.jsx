@@ -21,7 +21,7 @@ export function useFetchData(fetchFunction, userId, transformType = null) {
         setError(null);
       } catch (err) {
         console.error("Erreur fetch data:", err);
-        setError("Impossible de récupérer les données pour le moment.");
+        setError(err);
       } finally {
         setLoading(false);
       }

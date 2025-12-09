@@ -6,6 +6,7 @@ import {
 } from "recharts";
 import { getUserMainData } from "../services/api";
 import { useFetchData } from "../hooks/useFetchData";
+import LoaderError from "./LoaderError";
 import "../styles/components/ScoreRadial.css";
 
 const ScoreRadial = ({ userId }) => {
@@ -15,27 +16,18 @@ const ScoreRadial = ({ userId }) => {
     error,
   } = useFetchData(getUserMainData, userId, "score");
 
-  if (loading) {
-    return (
-      <div className="score-wrapper">
-        <div className="score-card">
-          <div className="score-container-msg">
-            <p>Chargement...</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  const isEmpty = score == null;
 
-  if (error) {
+  if (loading || error || isEmpty) {
     return (
-      <div className="score-wrapper">
-        <div className="score-card">
-          <div className="score-container-msg">
-            <p>{error}</p>
-          </div>
-        </div>
-      </div>
+      <LoaderError
+        loading={loading}
+        error={error}
+        empty={isEmpty}
+        loadingMessage="Chargement..."
+        errorMessage="Impossible de récupérer le score."
+        emptyMessage="Aucune donnée disponible."
+      />
     );
   }
 

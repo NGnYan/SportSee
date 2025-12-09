@@ -1,9 +1,3 @@
-.avg-chart-loader {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .avg-chart-container {
   background: linear-gradient(rgba(255, 0, 0, 0.9), rgba(255, 0, 0, 1));
   border-radius: 10px;

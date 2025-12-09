@@ -9,6 +9,7 @@ import {
 import "../styles/components/AverageSessionsChart.css";
 import { getUserAverageSessions } from "../services/api";
 import { useFetchData } from "../hooks/useFetchData";
+import LoaderError from "./LoaderError";
 
 function CustomTooltip({ active, payload }) {
   if (!active || !payload || payload.length === 0) return null;
@@ -23,15 +24,20 @@ function AverageSessionsChart({ userId }) {
     error,
   } = useFetchData(getUserAverageSessions, userId, "sessions");
 
-  if (loading) return <div className="avg-chart-loader">Chargement…</div>;
-  if (error)
+  const isEmpty = !sessions || sessions.length === 0;
+
+  if (loading || error || isEmpty) {
     return (
-      <div className="avg-chart-loader">
-        Impossible de récupérer les sessions.
-      </div>
+      <LoaderError
+        loading={loading}
+        error={error}
+        empty={isEmpty}
+        loadingMessage="Chargement du graphique..."
+        errorMessage="Impossible de récupérer les données de sessions."
+        emptyMessage="Aucune donnée disponible."
+      />
     );
-  if (!sessions || sessions.length === 0)
-    return <div className="avg-chart-loader">Aucune donnée</div>;
+  }
 
   return (
     <div className="avg-chart-container">

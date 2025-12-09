@@ -2,6 +2,7 @@ import "../styles/components/RadarPerformance.css";
 import { RadarChart, Radar, PolarAngleAxis, PolarGrid } from "recharts";
 import { getUserPerformance } from "../services/api";
 import { useFetchData } from "../hooks/useFetchData";
+import LoaderError from "./LoaderError";
 
 const RadarPerformance = ({ userId }) => {
   const { data, loading, error } = useFetchData(
@@ -10,16 +11,20 @@ const RadarPerformance = ({ userId }) => {
     "performance"
   );
 
-  if (loading)
-    return <div className="radar-container-loader">Chargement...</div>;
-  if (error)
+  const isEmpty = !data || data.length === 0;
+
+  if (loading || error || isEmpty) {
     return (
-      <div className="radar-container-loader">
-        Impossible de récupérer les performances
-      </div>
+      <LoaderError
+        loading={loading}
+        error={error}
+        empty={isEmpty}
+        loadingMessage="Chargement..."
+        errorMessage="Impossible de récupérer les performances."
+        emptyMessage="Aucune donnée disponible."
+      />
     );
-  if (!data || data.length === 0)
-    return <div className="radar-container-loader">Aucune donnée</div>;
+  }
 
   const formatTick = (tick) =>
     tick?.charAt(0).toUpperCase() + tick?.slice(1).toLowerCase();
