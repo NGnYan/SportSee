@@ -1,4 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import "../styles/pages/Dashboard.css";
 import WelcomeBanner from "../components/WelcomeBanner";
 import NavbarTop from "../components/NavbarTop";
@@ -22,16 +23,15 @@ function Dashboard() {
   const { id } = useParams();
   const userId = parseInt(id);
   const { data: user, loading, error } = useFetchData(getUserMainData, userId);
-
   const navigate = useNavigate();
 
-  if (!loading && !user) {
-    navigate("/error");
-    console.log("teste");
-    return null;
-  }
+  useEffect(() => {
+    if (error) {
+      navigate("/error");
+    }
+  }, [error, navigate]);
 
-  if (loading) {
+  if (loading || (!user && !error)) {
     return (
       <div className="loader-container">
         <svg
@@ -49,10 +49,7 @@ function Dashboard() {
     );
   }
 
-  if (error) {
-    return <div>Impossible de récupérer les données de l’utilisateur.</div>;
-  }
-
+  // JSX principal, utilisateur présent et fetch réussi
   const firstName = user.userInfos.firstName;
   const message = "Félicitation ! Vous avez explosé vos objectifs hier 👏";
 
@@ -64,7 +61,6 @@ function Dashboard() {
       </header>
       <main>
         <WelcomeBanner name={firstName} message={message} />
-
         <div className="dashboard-container">
           <div className="chart-container">
             <div className="activity-chart">
@@ -76,7 +72,6 @@ function Dashboard() {
               <ScoreRadial userId={userId} />
             </div>
           </div>
-
           <div className="stat-container">
             <StatCard
               icon={calorieIcon}
