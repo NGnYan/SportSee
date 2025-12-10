@@ -56,11 +56,15 @@ function AverageSessionsChart({ userId }) {
           </defs>
 
           <XAxis
-            dataKey="day"
+            dataKey="index"
             axisLine={false}
             tickLine={false}
             tick={{ fill: "rgba(255, 255, 255, 0.6)", fontSize: 14 }}
             padding={{ left: 30, right: 30 }}
+            tickFormatter={(value) => {
+              const days = ["L", "M", "M", "J", "V", "S", "D"];
+              return days[value];
+            }}
           />
 
           <Tooltip
@@ -76,13 +80,14 @@ function AverageSessionsChart({ userId }) {
                   height={height}
                   fill="rgba(0,0,0,0.15)"
                   radius={0}
+                  pointerEvents="none"
                 />
               );
             }}
           />
 
           <Area
-            type="monotone"
+            type="natural"
             dataKey="sessionLength"
             stroke="rgba(255,255,255,0.8)"
             strokeWidth={2}

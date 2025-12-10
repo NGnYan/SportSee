@@ -16,6 +16,7 @@ export function transformFactory(type = null) {
       const days = ["L", "M", "M", "J", "V", "S", "D"];
       return data.sessions.map((s, i) => ({
         day: days[i],
+        index: i,
         sessionLength: s.sessionLength,
       }));
     },
