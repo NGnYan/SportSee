@@ -1,16 +1,134 @@
-# React + Vite
+# 🏃‍♂️ SportSee - Dashboard Analytics
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🎯 Description
 
-Currently, two official plugins are available:
+SportSee est une application de tableau de bord permettant aux utilisateurs de suivre leurs activités sportives à travers des graphiques interactifs et des indicateurs de performance.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Fonctionnalités
 
-## React Compiler
+- 📊 **Graphiques interactifs** - Visualisation des données avec Recharts
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+  - Graphique d'activité quotidienne (BarChart)
+  - Durée moyenne des sessions (AreaChart)
+  - Graphique de performance radar (RadarChart)
+  - Score d'objectif (RadialBarChart)
 
-## Expanding the ESLint configuration
+- 📱 **Design responsive** - Mise en page optimisée pour les résolutions à partir de 1024×780px
+- 🎨 **UI moderne** - Interface utilisateur épurée et intuitive
+- ⚡ **Performance optimisée** - Chargement rapide et animations fluides
+- 🔄 **Gestion d'état** - Hooks React personnalisés pour la récupération de données
+- 🛡️ **Gestion d'erreurs** - Affichage des états de chargement et d'erreur
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠️ Technologies
+
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![React](https://img.shields.io/badge/React-18.x-61DAFB?style=for-the-badge&logo=react&logoColor=white)
+![Recharts](https://img.shields.io/badge/Recharts-2.x-8884d8?style=for-the-badge)
+![Vite](https://img.shields.io/badge/Vite-5.x-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+
+### Frontend
+
+- **React**
+- **Recharts**
+- **React Router**
+- **PropTypes**
+- **Vite**
+- **ESLint**
+- **CSS3**
+
+## 📦 Prérequis
+
+Avant de commencer, assurez-vous d'avoir installé :
+
+- **Node.js**
+- **npm** ou **yarn**
+
+Vérifiez vos versions :
+
+```bash
+node --version
+npm --version
+```
+
+## 🚀 Installation
+
+### 1. Cloner le repository
+
+```bash
+git clone https://github.com/NGnYan/SportSee.git
+cd sportsee
+```
+
+### 2. Installer les dépendances
+
+```bash
+npm install
+# ou
+yarn install
+```
+
+### 3. Configuration
+
+Créez un fichier `.env` à la racine du projet :
+
+VITE_API_BASE_URL=http://localhost:3000
+
+## 🎬 Démarrage
+
+### Démarrer le backend
+
+Le projet nécessite un backend pour fonctionner. Assurez-vous que le serveur API est lancé sur le port 3000.
+
+### Démarrer le frontend
+
+```bash
+npm run dev
+# ou
+yarn dev
+```
+
+L'application sera accessible sur `http://localhost:5173`
+
+## 📁 Structure
+
+src/
+│── components/ # Composants UI et graphiques
+│── hooks/ # Hooks personnalisés (ex: useFetchData)
+│── mocks/ # Données mock
+│── pages/ # Pages principales (Dashboard, ErrorPage)
+│── services/ # API + transformations
+│── styles/ # Styles CSS
+│── App.jsx # Routes principales
+│── main.jsx # Point d'entrée
+
+## 🔌 API
+
+### Endpoints disponibles
+
+| Méthode | Endpoint                     | Description              |
+| ------- | ---------------------------- | ------------------------ |
+| GET     | `/user/:id`                  | Informations utilisateur |
+| GET     | `/user/:id/activity`         | Activité quotidienne     |
+| GET     | `/user/:id/average-sessions` | Sessions moyennes        |
+| GET     | `/user/:id/performance`      | Performance              |
+
+### Format des données
+
+Les données sont automatiquement transformées via `transformFactory` :
+
+## 📜 Scripts disponibles
+
+```bash
+# Démarrer en mode développement
+npm run dev
+
+# Compiler pour la production
+npm run build
+
+# Prévisualiser la build de production
+npm run preview
+
+# Linter le code
+npm run lint
+```
