@@ -1,6 +1,8 @@
 import {
-  AreaChart,
+  LineChart,
+  Line,
   Area,
+  YAxis,
   XAxis,
   Tooltip,
   ResponsiveContainer,
@@ -43,8 +45,8 @@ function AverageSessionsChart({ userId }) {
     <div className="avg-chart-container">
       <div className="avg-chart-title">Durée moyenne des sessions</div>
 
-      <ResponsiveContainer>
-        <AreaChart
+      <ResponsiveContainer width="100%" height="100%">
+        <LineChart
           data={sessions}
           margin={{ top: 60, right: 0, left: 0, bottom: 20 }}
         >
@@ -54,13 +56,13 @@ function AverageSessionsChart({ userId }) {
               <stop offset="100%" stopColor="rgba(0, 0, 0, 0)" />
             </linearGradient>
           </defs>
-
+          <YAxis hide domain={["dataMin - 15", "dataMax + 10"]} />
           <XAxis
             dataKey="index"
             axisLine={false}
             tickLine={false}
             tick={{ fill: "rgba(255, 255, 255, 0.6)", fontSize: 14 }}
-            padding={{ left: 30, right: 30 }}
+            padding={{ left: 20, right: 20 }}
             tickFormatter={(value) => {
               const days = ["L", "M", "M", "J", "V", "S", "D"];
               return days[value];
@@ -71,7 +73,6 @@ function AverageSessionsChart({ userId }) {
             content={<CustomTooltip />}
             cursor={(props) => {
               const { x, height } = props;
-
               return (
                 <Rectangle
                   x={x - 30}
@@ -86,12 +87,12 @@ function AverageSessionsChart({ userId }) {
             }}
           />
 
-          <Area
+          <Line
             type="natural"
             dataKey="sessionLength"
             stroke="rgba(255,255,255,0.8)"
             strokeWidth={2}
-            fill="url(#colorSession)"
+            dot={false}
             activeDot={{
               r: 6,
               fill: "#fff",
@@ -100,7 +101,15 @@ function AverageSessionsChart({ userId }) {
             }}
             animationDuration={1200}
           />
-        </AreaChart>
+
+          <Area
+            type="natural"
+            dataKey="sessionLength"
+            stroke="none"
+            fill="url(#colorSession)"
+            isAnimationActive={false}
+          />
+        </LineChart>
       </ResponsiveContainer>
     </div>
   );
