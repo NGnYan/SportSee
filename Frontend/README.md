@@ -90,17 +90,17 @@ yarn dev
 
 L'application sera accessible sur `http://localhost:5173`
 
-## 📁 Structure
+## ⚠️ Important — Navigation et URLs du frontend
 
-src/
-│── components/ # Composants UI et graphiques
-│── hooks/ # Hooks personnalisés (ex: useFetchData)
-│── mocks/ # Données mock
-│── pages/ # Pages principales (Dashboard, ErrorPage)
-│── services/ # API + transformations
-│── styles/ # Styles CSS
-│── App.jsx # Routes principales
-│── main.jsx # Point d'entrée
+Lors des tests, assurez-vous d’accéder directement à une URL du type : http://localhost:5173/user/12
+
+Si vous ouvrez simplement : http://localhost:5173/ vous serez redirigé vers la **ErrorPage**.
+
+En effet, l’application nécessite obligatoirement **un `userId` valide dans l’URL** pour fonctionner correctement.
+
+### 🔍 Pourquoi ce fonctionnement ?
+
+L’architecture du frontend repose sur une route dynamique définie comme : /user/:id
 
 ## 🔌 API
 
