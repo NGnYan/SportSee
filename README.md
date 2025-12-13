@@ -17,7 +17,7 @@ SportSee se compose de deux composants principaux :
 
 Avant de commencer, assurez-vous d'avoir installé :
 
-- **Node.js** 
+- **Node.js**
 - **npm** ou **yarn**
 - **Docker** (optionnel, pour le backend conteneurisé)
 
@@ -56,14 +56,20 @@ Ouvrez un nouveau terminal :
 ```bash
 cd frontend
 npm install
-
-# Créer le fichier .env
-echo "VITE_API_BASE_URL=http://localhost:3000" > .env
-
 npm run dev
 ```
 
 L'application sera disponible sur `http://localhost:5173`
+
+# Utiliser le backend réel
+
+VITE_USE_MOCK=false
+VITE_API_BASE_URL=http://localhost:3000
+
+# Utiliser les données mockées
+
+VITE_USE_MOCK=true
+VITE_API_BASE_URL=http://localhost:3000
 
 ### 4. Accéder à l'application
 
@@ -91,7 +97,6 @@ Naviguez vers l'une de ces URLs :
   - Graphique linéaire de la durée moyenne des sessions
   - Graphique radar de performance
   - Graphique radial de complétion d'objectif
-- 📱 **Design responsive** (optimisé pour 1024×780px+)
 - ⚡ **Performance optimisée** avec Vite
 - 🛡️ **Gestion d'erreurs** avec états de chargement
 - 🎨 **UI moderne** avec design épuré
@@ -127,12 +132,12 @@ L'application comprend deux utilisateurs mockés :
 
 Tous les endpoints suivent ce schéma : `http://localhost:3000/user/:userId/*`
 
-| Endpoint                         | Description                                    |
-| -------------------------------- | ---------------------------------------------- |
-| `/user/:userId`                  | Informations principales et données clés       |
-| `/user/:userId/activity`         | Activité quotidienne (poids & calories)        |
-| `/user/:userId/average-sessions` | Durée moyenne des sessions par jour            |
-| `/user/:userId/performance`      | Métriques de performance par type d'activité   |
+| Endpoint                         | Description                                  |
+| -------------------------------- | -------------------------------------------- |
+| `/user/:userId`                  | Informations principales et données clés     |
+| `/user/:userId/activity`         | Activité quotidienne (poids & calories)      |
+| `/user/:userId/average-sessions` | Durée moyenne des sessions par jour          |
+| `/user/:userId/performance`      | Métriques de performance par type d'activité |
 
 ## 🐛 Dépannage
 
@@ -158,17 +163,17 @@ Tous les endpoints suivent ce schéma : `http://localhost:3000/user/:userId/*`
 ### Backend
 
 ```bash
-yarn dev          
-yarn start       
+yarn dev
+yarn start
 ```
 
 ### Frontend
 
 ```bash
-npm run dev       
-npm run build     
-npm run preview   
-npm run lint     
+npm run dev
+npm run build
+npm run preview
+npm run lint
 ```
 
 ## 🔄 Workflow de développement
@@ -179,13 +184,12 @@ npm run lint
 4. **Développer** → Apporter des modifications et voir les mises à jour en direct
 5. **Tester** → Basculer entre les utilisateurs (12 et 18)
 
-
 ## 👤 Auteur
 
 **NGnYan**
 
 - GitHub: [@NGnYan](https://github.com/NGnYan)
-  
+
 ---
 
 📖 **Besoin d'aide ?** Consultez les README détaillés dans les dossiers `backend/` et `frontend/`.
