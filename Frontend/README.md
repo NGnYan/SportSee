@@ -13,7 +13,6 @@ SportSee est une application de tableau de bord permettant aux utilisateurs de s
   - Graphique de performance radar (RadarChart)
   - Score d'objectif (RadialBarChart)
 
-- 📱 **Design responsive** - Mise en page optimisée pour les résolutions à partir de 1024×780px
 - 🎨 **UI moderne** - Interface utilisateur épurée et intuitive
 - ⚡ **Performance optimisée** - Chargement rapide et animations fluides
 - 🔄 **Gestion d'état** - Hooks React personnalisés pour la récupération de données
@@ -70,8 +69,14 @@ yarn install
 
 ### 3. Configuration
 
-Créez un fichier `.env` à la racine du projet :
+# Utiliser le backend réel
 
+VITE_USE_MOCK=false
+VITE_API_BASE_URL=http://localhost:3000
+
+# Utiliser les données mockées
+
+VITE_USE_MOCK=true
 VITE_API_BASE_URL=http://localhost:3000
 
 ## 🎬 Démarrage
