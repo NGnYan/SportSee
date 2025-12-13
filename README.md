@@ -63,13 +63,17 @@ L'application sera disponible sur `http://localhost:5173`
 
 # Utiliser le backend réel
 
+```env
 VITE_USE_MOCK=false
 VITE_API_BASE_URL=http://localhost:3000
+```
 
 # Utiliser les données mockées
 
+```env
 VITE_USE_MOCK=true
 VITE_API_BASE_URL=http://localhost:3000
+```
 
 ### 4. Accéder à l'application
 

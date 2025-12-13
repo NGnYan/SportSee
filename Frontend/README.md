@@ -71,13 +71,17 @@ yarn install
 
 # Utiliser le backend réel
 
+```env
 VITE_USE_MOCK=false
 VITE_API_BASE_URL=http://localhost:3000
+```
 
 # Utiliser les données mockées
 
+```env
 VITE_USE_MOCK=true
 VITE_API_BASE_URL=http://localhost:3000
+```
 
 ## 🎬 Démarrage
 
