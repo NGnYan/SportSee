@@ -1,7 +1,6 @@
 import {
   LineChart,
   Line,
-  Area,
   YAxis,
   XAxis,
   Tooltip,
@@ -15,8 +14,20 @@ import LoaderError from "./LoaderError";
 
 function CustomTooltip({ active, payload }) {
   if (!active || !payload || payload.length === 0) return null;
+  return <div className="avg-tooltip">{`${payload[0].value} min`}</div>;
+}
 
-  return <div className="avg-tooltip">{payload[0].value} min</div>;
+function CustomCursor({ points, y, width, height }) {
+  return (
+    <Rectangle
+      x={points[0].x}
+      y={y || 0}
+      width={width || 60}
+      height={height + 100}
+      fill="rgba(0, 0, 0, 0.1)"
+      pointerEvents="none"
+    />
+  );
 }
 
 function AverageSessionsChart({ userId }) {
@@ -43,25 +54,32 @@ function AverageSessionsChart({ userId }) {
 
   return (
     <div className="avg-chart-container">
-      <div className="avg-chart-title">Durée moyenne des sessions</div>
+      <div className="avg-chart-title">
+        Durée moyenne des
+        <br />
+        sessions
+      </div>
 
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
           data={sessions}
-          margin={{ top: 60, right: 0, left: 0, bottom: 20 }}
+          margin={{ top: 30, right: 5, left: 5, bottom: 5 }}
         >
           <defs>
-            <linearGradient id="colorSession" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="rgba(0, 0, 0, 0.05)" />
-              <stop offset="100%" stopColor="rgba(0, 0, 0, 0)" />
+            <linearGradient id="lineGradient" x1="0" x2="1">
+              <stop offset="0%" stopColor="#ffffff" stopOpacity={0.3} />
+              <stop offset="100%" stopColor="#ffffff" stopOpacity={1} />
             </linearGradient>
           </defs>
-          <YAxis hide domain={["dataMin - 15", "dataMax + 10"]} />
+
+          <YAxis hide domain={["dataMin - 15", "dataMax + 45"]} />
+
           <XAxis
             dataKey="index"
             axisLine={false}
             tickLine={false}
-            tick={{ fill: "rgba(255, 255, 255, 0.6)", fontSize: 14 }}
+            tick={{ fill: "rgba(255,255,255,0.6)", fontSize: 14 }}
+            interval={0}
             padding={{ left: 20, right: 20 }}
             tickFormatter={(value) => {
               const days = ["L", "M", "M", "J", "V", "S", "D"];
@@ -69,45 +87,20 @@ function AverageSessionsChart({ userId }) {
             }}
           />
 
-          <Tooltip
-            content={<CustomTooltip />}
-            cursor={(props) => {
-              const { x, height } = props;
-              return (
-                <Rectangle
-                  x={x - 30}
-                  y={0}
-                  width={60}
-                  height={height}
-                  fill="rgba(0,0,0,0.15)"
-                  radius={0}
-                  pointerEvents="none"
-                />
-              );
-            }}
-          />
+          <Tooltip content={<CustomTooltip />} cursor={<CustomCursor />} />
 
           <Line
             type="natural"
             dataKey="sessionLength"
-            stroke="rgba(255,255,255,0.8)"
+            stroke="url(#lineGradient)"
             strokeWidth={2}
             dot={false}
             activeDot={{
-              r: 6,
+              r: 4,
               fill: "#fff",
-              stroke: "rgba(255,255,255,0.3)",
-              strokeWidth: 10,
+              stroke: "rgba(255,255,255,0.4)",
+              strokeWidth: 8,
             }}
-            animationDuration={1200}
-          />
-
-          <Area
-            type="natural"
-            dataKey="sessionLength"
-            stroke="none"
-            fill="url(#colorSession)"
-            isAnimationActive={false}
           />
         </LineChart>
       </ResponsiveContainer>
