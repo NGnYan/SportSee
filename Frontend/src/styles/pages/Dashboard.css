@@ -79,7 +79,7 @@ body {
 
 .stat-chart {
   display: flex;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 .stat-chart > * {

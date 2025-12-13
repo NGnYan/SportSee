@@ -1,6 +1,6 @@
 .avg-chart-container {
   background: linear-gradient(rgba(255, 0, 0, 0.9), rgba(255, 0, 0, 1));
-  border-radius: 10px;
+  border-radius: 5px;
   width: 100%;
   position: relative;
   overflow: hidden;
@@ -11,7 +11,7 @@
   top: 30px;
   left: 30px;
   color: rgba(255, 255, 255, 0.6);
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   width: 150px;
 }
 
