@@ -41,15 +41,15 @@ const ScoreRadial = ({ userId }) => {
         <div className="score-container">
           <ResponsiveContainer width="100%" height="100%">
             <RadialBarChart
-              innerRadius="70%"
-              outerRadius="90%"
+              innerRadius="80%"
+              outerRadius="95%"
               data={data}
               startAngle={90}
               endAngle={-270}
             >
               <PolarAngleAxis type="number" domain={[0, 100]} tick={false} />
               <RadialBar
-                background={{ fill: "#e5e7eb" }}
+                background={{ fill: "#fbfbfb" }}
                 dataKey="value"
                 cornerRadius={10}
               />

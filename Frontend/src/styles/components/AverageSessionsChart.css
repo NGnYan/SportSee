@@ -9,9 +9,9 @@
 .avg-chart-title {
   position: absolute;
   top: 30px;
-  left: 30px;
+  left: 20px;
   color: rgba(255, 255, 255, 0.6);
-  font-size: 0.8rem;
+  font-size: 0.6rem;
   width: 150px;
 }
 
@@ -20,4 +20,10 @@
   color: rgb(0, 0, 0);
   padding: 15px 15px;
   font-size: 0.8rem;
+}
+
+@media (min-width: 1440px) {
+  .avg-chart-title {
+    font-size: 0.8rem;
+  }
 }

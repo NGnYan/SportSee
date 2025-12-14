@@ -80,7 +80,7 @@ function AverageSessionsChart({ userId }) {
             tickLine={false}
             tick={{ fill: "rgba(255,255,255,0.6)", fontSize: 14 }}
             interval={0}
-            padding={{ left: 20, right: 20 }}
+            padding={{ left: 10, right: 10 }}
             tickFormatter={(value) => {
               const days = ["L", "M", "M", "J", "V", "S", "D"];
               return days[value];
