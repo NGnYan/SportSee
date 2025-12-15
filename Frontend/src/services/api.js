@@ -8,6 +8,13 @@ import {
 const USE_MOCK = import.meta.env.VITE_USE_MOCK === "true";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
+/**
+ * Retrieves the main data of a user.
+ * Uses either mock data or the API depending on the configuration.
+ *
+ * @param {number} userId - Unique identifier of the user.
+ * @returns {Promise<Object>} User main data.
+ */
 export async function getUserMainData(userId) {
   if (USE_MOCK) {
     const user = USER_MAIN_DATA.find((u) => u.id === userId);
@@ -19,6 +26,13 @@ export async function getUserMainData(userId) {
   }
 }
 
+/**
+ * Retrieves the daily activity data of a user.
+ *
+ * @param {number} userId - Unique identifier of the user.
+ * @returns {Promise<Object>} User activity data.
+ * @throws {Error} If mock activity data cannot be found.
+ */
 export async function getUserActivity(userId) {
   if (USE_MOCK) {
     const userActivity = USER_ACTIVITY.find((u) => u.userId === userId);
@@ -32,6 +46,13 @@ export async function getUserActivity(userId) {
   }
 }
 
+/**
+ * Retrieves the average session duration data of a user.
+ *
+ * @param {number} userId - Unique identifier of the user.
+ * @returns {Promise<Object>} User average session data.
+ * @throws {Error} If mock average session data cannot be found.
+ */
 export async function getUserAverageSessions(userId) {
   if (USE_MOCK) {
     const userAverage = USER_AVERAGE_SESSIONS.find((u) => u.userId === userId);
@@ -47,6 +68,13 @@ export async function getUserAverageSessions(userId) {
   }
 }
 
+/**
+ * Retrieves the performance data of a user by activity type.
+ *
+ * @param {number} userId - Unique identifier of the user.
+ * @returns {Promise<Object>} User performance data.
+ * @throws {Error} If mock performance data cannot be found.
+ */
 export async function getUserPerformance(userId) {
   if (USE_MOCK) {
     const userPerformance = USER_PERFORMANCE.find((u) => u.userId === userId);
